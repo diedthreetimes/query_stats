@@ -1,3 +1,5 @@
+require 'query_stats/holder'
+
 module QueryStats
   module Recorder
     def self.included(base)
@@ -5,11 +7,11 @@ module QueryStats
         alias_method_chain :execute, :query_stats
       end
     end
-    
+
     def queries
       @query_stats ||= QueryStats::Holder.new
     end
-    
+
     def execute_with_query_stats(*args)
       result = nil
       seconds = Benchmark.realtime do
